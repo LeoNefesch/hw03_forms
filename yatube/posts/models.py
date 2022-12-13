@@ -3,6 +3,8 @@ from django.db import models
 
 User = get_user_model()
 
+TEXT_LENGTH = 30
+
 
 class Group(models.Model):
     title = models.CharField(max_length=200)
@@ -25,4 +27,4 @@ class Post(models.Model):
         ordering = ['-pub_date']
 
     def __str__(self):
-        return self.text
+        return self.text[:TEXT_LENGTH]
