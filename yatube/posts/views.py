@@ -5,8 +5,6 @@ from .forms import PostForm
 from .models import Group, Post, User
 from .paginators import post_paginator
 
-NUMBER_OF_ROWS: int = 10
-
 
 def index(request):
     posts = Post.objects.select_related('author', 'group')
@@ -60,8 +58,8 @@ def post_edit(request, post_id):
     if post.author != request.user:
         return redirect('posts:post_detail', post_id)
     form = PostForm(request.POST or None, instance=post)
-    context = {'form': form, 'is_edit': True, }
     if not form.is_valid():
+        context = {'form': form, 'is_edit': True, }
         return render(request, 'posts/create_post.html', context)
     form.save()
     return redirect('posts:post_detail', post_id)
